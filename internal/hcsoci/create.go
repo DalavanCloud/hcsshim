@@ -110,26 +110,28 @@ func CreateContainer(createOptions *CreateOptions) (_ *hcs.System, _ *Resources,
 		coi.Spec.Windows.Network != nil &&
 		schemaversion.IsV21(coi.actualSchemaVersion) {
 
-		if coi.NetworkNamespace != "" {
-			resources.netNS = coi.NetworkNamespace
-		} else {
-			err := createNetworkNamespace(coi, resources)
-			if err != nil {
-				return nil, resources, err
+		/*
+			if coi.NetworkNamespace != "" {
+				resources.netNS = coi.NetworkNamespace
+			} else {
+				err := createNetworkNamespace(coi, resources)
+				if err != nil {
+					return nil, resources, err
+				}
 			}
-		}
-		coi.actualNetworkNamespace = resources.netNS
-		if coi.HostingSystem != nil {
-			endpoints, err := getNamespaceEndpoints(coi.actualNetworkNamespace)
-			if err != nil {
-				return nil, resources, err
+			coi.actualNetworkNamespace = resources.netNS
+			if coi.HostingSystem != nil {
+				endpoints, err := getNamespaceEndpoints(coi.actualNetworkNamespace)
+				if err != nil {
+					return nil, resources, err
+				}
+				err = coi.HostingSystem.AddNetNS(coi.actualNetworkNamespace, endpoints)
+				if err != nil {
+					return nil, resources, err
+				}
+				resources.addedNetNSToVM = true
 			}
-			err = coi.HostingSystem.AddNetNS(coi.actualNetworkNamespace, endpoints)
-			if err != nil {
-				return nil, resources, err
-			}
-			resources.addedNetNSToVM = true
-		}
+		*/
 	}
 
 	var hcsDocument interface{}
